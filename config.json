@@ -1,0 +1,6 @@
+{
+  "debug_mode": false,
+  "http_timeout_seconds": 10,
+  "max_feed_pages": 50,
+  "max_image_bytes": 10485760
+}

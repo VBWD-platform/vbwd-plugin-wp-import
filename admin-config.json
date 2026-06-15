@@ -1,0 +1,14 @@
+{
+  "tabs": [
+    {
+      "id": "general",
+      "label": "General",
+      "fields": [
+        { "key": "debug_mode", "label": "Debug mode", "component": "checkbox" },
+        { "key": "http_timeout_seconds", "label": "HTTP timeout (seconds)", "component": "input", "inputType": "number" },
+        { "key": "max_feed_pages", "label": "Max feed pages per walk", "component": "input", "inputType": "number" },
+        { "key": "max_image_bytes", "label": "Max image size (bytes)", "component": "input", "inputType": "number" }
+      ]
+    }
+  ]
+}

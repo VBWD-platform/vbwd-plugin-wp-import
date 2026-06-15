@@ -29,9 +29,7 @@ class WpTermClassifier:
         # site base → category names lowercased; None = REST down
         self._cache: Dict[str, Optional[Set[str]]] = {}
 
-    def classify(
-        self, site_base_url: str, term_names: List[str]
-    ) -> Dict[str, str]:
+    def classify(self, site_base_url: str, term_names: List[str]) -> Dict[str, str]:
         category_names = self._lookup(site_base_url)
         if category_names is None:
             return {name: CATEGORY for name in term_names}

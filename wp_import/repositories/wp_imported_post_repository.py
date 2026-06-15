@@ -48,16 +48,11 @@ class WpImportedPostRepository:
     ) -> Tuple[List[WpImportedPost], int]:
         query = self._session.query(WpImportedPost)
         if search:
-            query = query.filter(
-                WpImportedPost.title_at_import.ilike(f"%{search}%")
-            )
+            query = query.filter(WpImportedPost.title_at_import.ilike(f"%{search}%"))
         total = query.count()
         sort_column = self.SORT_COLUMNS.get(sort, WpImportedPost.created_at)
         ordered = sort_column.asc() if order == "asc" else sort_column.desc()
         rows = (
-            query.order_by(ordered)
-            .offset((page - 1) * per_page)
-            .limit(per_page)
-            .all()
+            query.order_by(ordered).offset((page - 1) * per_page).limit(per_page).all()
         )
         return rows, total

@@ -82,9 +82,7 @@ def _fixture_http():
     )
     http_get.route(
         lambda url: f"/wp-json/wp/v2/media/{REST_FEATURED_MEDIA_ID}" in url,
-        lambda url: FakeResponse(
-            json_data={"source_url": REST_FEATURED_SOURCE_URL}
-        ),
+        lambda url: FakeResponse(json_data={"source_url": REST_FEATURED_SOURCE_URL}),
     )
     http_get.route(
         lambda url: url.endswith(".jpg"),

@@ -40,9 +40,7 @@ def _image_http(urls):
     return http_get
 
 
-def _build_service(
-    items, http_get=None, repository=None, featured_media_resolver=None
-):
+def _build_service(items, http_get=None, repository=None, featured_media_resolver=None):
     feed_reader = MagicMock()
     feed_reader.fetch_all.return_value = items
     term_classifier = MagicMock()
@@ -92,8 +90,11 @@ def _imported_row(guid, cms_post_id=None):
 
 class TestStats:
     def test_counts_by_the_d2_importability_rule(self):
-        items = [_feed_item(guid="g-live"), _feed_item(guid="g-stale"),
-                 _feed_item(guid="g-new")]
+        items = [
+            _feed_item(guid="g-live"),
+            _feed_item(guid="g-stale"),
+            _feed_item(guid="g-new"),
+        ]
         repository = MagicMock()
         live_row = _imported_row("g-live")
         stale_row = _imported_row("g-stale")
@@ -259,9 +260,7 @@ class TestRunImages:
 
         created = service._post_service.create_post.call_args.args[0]
         assert "https://img.example/gone.jpg" in created["content_html"]
-        assert result["results"][0]["image_misses"] == [
-            "https://img.example/gone.jpg"
-        ]
+        assert result["results"][0]["image_misses"] == ["https://img.example/gone.jpg"]
 
     def test_oversized_image_is_a_miss(self):
         items = [_feed_item(content_html='<img src="https://img.example/big.jpg">')]
@@ -300,9 +299,7 @@ class TestFeaturedImage:
         assert http_get.calls.count("https://img.example/featured.jpg") == 1
 
     def test_first_content_image_used_when_no_media(self):
-        items = [
-            _feed_item(content_html='<img src="https://img.example/inline.jpg">')
-        ]
+        items = [_feed_item(content_html='<img src="https://img.example/inline.jpg">')]
         http_get = _image_http(["https://img.example/inline.jpg"])
         service = _build_service(items, http_get=http_get)
 
@@ -366,9 +363,7 @@ class TestRestFeaturedLookup:
         assert result["results"][0]["image_misses"] == []
 
     def test_rest_lookup_wins_over_first_content_image(self):
-        items = [
-            _feed_item(content_html='<img src="https://img.example/inline.jpg">')
-        ]
+        items = [_feed_item(content_html='<img src="https://img.example/inline.jpg">')]
         resolver = self._resolver(self.REST_URL)
         http_get = _image_http([self.REST_URL, "https://img.example/inline.jpg"])
         service = _build_service(
@@ -382,9 +377,7 @@ class TestRestFeaturedLookup:
         assert http_get.calls.count(self.REST_URL) == 1
 
     def test_rest_miss_falls_through_to_first_content_image(self):
-        items = [
-            _feed_item(content_html='<img src="https://img.example/inline.jpg">')
-        ]
+        items = [_feed_item(content_html='<img src="https://img.example/inline.jpg">')]
         resolver = self._resolver(None)  # REST down / featured_media 0 / missing
         http_get = _image_http(["https://img.example/inline.jpg"])
         service = _build_service(
@@ -424,9 +417,7 @@ class TestRestFeaturedLookup:
         assert result["results"][0]["image_misses"] == [self.REST_URL]
 
     def test_rest_url_shared_with_content_image_downloaded_once(self):
-        items = [
-            _feed_item(content_html=f'<img src="{self.REST_URL}">')
-        ]
+        items = [_feed_item(content_html=f'<img src="{self.REST_URL}">')]
         resolver = self._resolver(self.REST_URL)
         http_get = _image_http([self.REST_URL])
         service = _build_service(
@@ -533,9 +524,7 @@ class TestRemove:
         result = service.remove([str(row.cms_post_id)])
 
         assert result == {"removed": 1}
-        service._post_service.delete_post.assert_called_once_with(
-            str(row.cms_post_id)
-        )
+        service._post_service.delete_post.assert_called_once_with(str(row.cms_post_id))
         repository.delete.assert_called_once_with(row)
 
     def test_remove_tolerates_already_deleted_post(self):

@@ -22,9 +22,7 @@ _MEDIA_LOOKUP_PATH = "/wp-json/wp/v2/media"
 class FeaturedMediaResolver:
     """Resolves a post link to its REST featured-image source URL, or None."""
 
-    def __init__(
-        self, http_get: Callable[..., Any], timeout_seconds: int = 10
-    ) -> None:
+    def __init__(self, http_get: Callable[..., Any], timeout_seconds: int = 10) -> None:
         self._http_get = http_get
         self._timeout_seconds = timeout_seconds
 
@@ -39,9 +37,7 @@ class FeaturedMediaResolver:
             return None
         return self._fetch_media_source_url(site_base, featured_media_id)
 
-    def _fetch_featured_media_id(
-        self, site_base: str, link_slug: str
-    ) -> Optional[int]:
+    def _fetch_featured_media_id(self, site_base: str, link_slug: str) -> Optional[int]:
         posts_payload = self._rest_get_json(
             f"{site_base}{_POSTS_LOOKUP_PATH}"
             f"?slug={quote(link_slug)}&_fields=featured_media"
@@ -60,8 +56,7 @@ class FeaturedMediaResolver:
         self, site_base: str, featured_media_id: int
     ) -> Optional[str]:
         media_payload = self._rest_get_json(
-            f"{site_base}{_MEDIA_LOOKUP_PATH}/{featured_media_id}"
-            "?_fields=source_url"
+            f"{site_base}{_MEDIA_LOOKUP_PATH}/{featured_media_id}" "?_fields=source_url"
         )
         if not isinstance(media_payload, dict):
             return None

@@ -44,9 +44,7 @@ def upgrade():
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("wp_guid", name="uq_wp_imported_post_wp_guid"),
     )
-    op.create_index(
-        "ix_wp_imported_post_wp_guid", TABLE_NAME, ["wp_guid"], unique=True
-    )
+    op.create_index("ix_wp_imported_post_wp_guid", TABLE_NAME, ["wp_guid"], unique=True)
     op.create_index("ix_wp_imported_post_cms_post_id", TABLE_NAME, ["cms_post_id"])
 
 

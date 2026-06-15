@@ -82,9 +82,7 @@ class WpImportService:
     # ── stats ──────────────────────────────────────────────────────────────
     def stats(self, feed_url: str) -> Dict[str, int]:
         items = self._feed_reader.fetch_all(feed_url)
-        already_imported = sum(
-            1 for item in items if self._is_imported(item["guid"])
-        )
+        already_imported = sum(1 for item in items if self._is_imported(item["guid"]))
         return {
             "total_in_feed": len(items),
             "never_imported": len(items) - already_imported,
@@ -98,12 +96,9 @@ class WpImportService:
         attempted = pending[:chunk]
         image_cache: Dict[str, Optional[str]] = {}
         results = [
-            self._import_item_guarded(item, feed_url, image_cache)
-            for item in attempted
+            self._import_item_guarded(item, feed_url, image_cache) for item in attempted
         ]
-        imported_count = sum(
-            1 for result in results if result["status"] == "imported"
-        )
+        imported_count = sum(1 for result in results if result["status"] == "imported")
         return {
             "imported_count": imported_count,
             "skipped_count": len(items) - len(pending),
@@ -155,9 +150,7 @@ class WpImportService:
             item, content_image_sources, image_cache, image_misses
         )
 
-        post = self._create_post_with_slug_retry(
-            item, content_html, featured_image_url
-        )
+        post = self._create_post_with_slug_retry(item, content_html, featured_image_url)
         if item.get("published_at"):
             self._post_service.update_post(
                 post["id"], {"published_at": item["published_at"]}
@@ -261,9 +254,7 @@ class WpImportService:
             return image_cache[remote_url]
         local_url = None
         try:
-            response = self._http_get(
-                remote_url, timeout=self._http_timeout_seconds
-            )
+            response = self._http_get(remote_url, timeout=self._http_timeout_seconds)
             if (
                 response.status_code == 200
                 and response.content
@@ -291,9 +282,7 @@ class WpImportService:
         )
         return uploaded.get("url_path")
 
-    def _assign_terms(
-        self, post_id: str, item: Dict[str, Any], feed_url: str
-    ) -> None:
+    def _assign_terms(self, post_id: str, item: Dict[str, Any], feed_url: str) -> None:
         """Split classified terms (D7): categories → cms_term taxonomy; tags →
         the core tag catalog (cms_post-scoped slugs)."""
         term_names = item.get("term_names") or []

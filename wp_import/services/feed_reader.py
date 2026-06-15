@@ -92,9 +92,7 @@ class FeedReader:
                     )
                 break
             page_items = self._parse_page(response.content)
-            new_items = [
-                item for item in page_items if item["guid"] not in seen_guids
-            ]
+            new_items = [item for item in page_items if item["guid"] not in seen_guids]
             if not new_items:
                 break
             for item in new_items:

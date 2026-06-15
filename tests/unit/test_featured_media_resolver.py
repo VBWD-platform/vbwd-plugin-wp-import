@@ -16,9 +16,7 @@ POSTS_LOOKUP_URL = (
     "https://redrobot.example/wp-json/wp/v2/posts"
     "?slug=hello-world&_fields=featured_media"
 )
-MEDIA_LOOKUP_URL = (
-    "https://redrobot.example/wp-json/wp/v2/media/77?_fields=source_url"
-)
+MEDIA_LOOKUP_URL = "https://redrobot.example/wp-json/wp/v2/media/77?_fields=source_url"
 SOURCE_URL = "https://redrobot.example/wp-content/uploads/2024/03/featured.jpg"
 
 
@@ -26,9 +24,7 @@ def _http_with_featured(featured_media_id=77, source_url=SOURCE_URL):
     http_get = FakeHttpGet()
     http_get.route(
         lambda url: "/wp-json/wp/v2/posts" in url,
-        lambda url: FakeResponse(
-            json_data=[{"featured_media": featured_media_id}]
-        ),
+        lambda url: FakeResponse(json_data=[{"featured_media": featured_media_id}]),
     )
     http_get.route(
         lambda url: "/wp-json/wp/v2/media/" in url,

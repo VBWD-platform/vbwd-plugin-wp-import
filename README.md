@@ -13,7 +13,13 @@ agnostic and gains this functionality only when the plugin is enabled.
 Clone into the backend plugin directory and enable it:
 
 ```bash
-git clone https://github.com/VBWD-platform/vbwd-plugin-wp-import.git vbwd-backend/plugins/wp-import\n```\n\nThen register it in `plugins/plugins.json` (`"wp-import": { "enabled": true }`)\nand add any config to `plugins/config.json`. The plugin follows the standard\nlayered layout (`routes` → `services` → `repositories` → `models`) and exposes a\n`BasePlugin` subclass in `__init__.py`.
+git clone https://github.com/VBWD-platform/vbwd-plugin-wp-import.git vbwd-backend/plugins/wp-import
+```
+
+Then register it in `plugins/plugins.json` (`"wp-import": { "enabled": true }`)
+and add any config to `plugins/config.json`. The plugin follows the standard
+layered layout (`routes` → `services` → `repositories` → `models`) and exposes
+a `BasePlugin` subclass in `__init__.py`.
 
 ## Versioning & changelog
 

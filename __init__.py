@@ -32,7 +32,7 @@ class WpImportPlugin(BasePlugin):
     def metadata(self) -> PluginMetadata:
         return PluginMetadata(
             name="wp_import",
-            version="1.0.0",
+            version="26.6",
             author="VBWD Team",
             description=(
                 "Import WordPress blog posts from an RSS feed: original "
